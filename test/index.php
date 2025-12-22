@@ -17,58 +17,51 @@
         <main>
             <a href="../" class="defaultButton">Porzuć test</a>
             <?php
-                require_once("../dbconnect.php");
+                require_once("test.php");
+                $test = new Test();
 
-                $getQuestionQuery = $connection->query(
-                    'SELECT pyt.Numer_pytania, pyt.Pytanie, pyt.Odp_A, pyt.Odp_B, pyt.Odp_C, pyt.Poprawna_odp, pyt.Media, pyt.Zakres_struktury, pyt.Liczba_punktow
-                    FROM pytania_egzaminacyjne as pyt WHERE Kategorie LIKE "%B,%"
-                    ORDER BY RAND() LIMIT 1'
-                );
-                $questionData = $getQuestionQuery->fetch();
-                $_SESSION["correctAnswer"] = $questionData["Poprawna_odp"];
-
-                if (!empty($getQuestionQuery) && 0 < $getQuestionQuery->rowCount()) {
+                if ($test->isAvailable()) {
                     echo <<<HTML
                         <div id="infoContainer" class="horizontalContainer">
                             <div class="mediaContainer">
                     HTML;
 
-                    if (str_ends_with($questionData["Media"], ".mp4")) {
+                    if (str_ends_with($test->questions[0]["Media"], ".mp4")) {
                         echo <<<HTML
                             <video id="questionVideo" autoplay muted>
-                                <source src='media/{$questionData["Media"]}' type='video/mp4'/>
+                                <source src='media/{$test->questions[0]["Media"]}' type='video/mp4'/>
                             </video>
                         HTML;
-                    } else if (str_ends_with($questionData["Media"], ".jpg")) {
+                    } else if (str_ends_with($test->questions[0]["Media"], ".jpg")) {
                         echo <<<HTML
-                            <img id="questionImage" src='media/{$questionData["Media"]}' alt='Obraz załączony do pytania'/>
+                            <img id="questionImage" src='media/{$test->questions[0]["Media"]}' alt='Obraz załączony do pytania'/>
                         HTML;
                     }
 
                     echo <<<HTML
                             </div>
                             <div id="testInfoContainer">
-                                <p>Numer pytania: {$questionData["Numer_pytania"]}</p>
-                                <p>Liczba punktów: {$questionData["Liczba_punktow"]}</p>
-                                <p>Zakres struktury: {$questionData["Zakres_struktury"]}</p>
+                                <p>Numer pytania: {$test->questions[0]["Numer_pytania"]}</p>
+                                <p>Liczba punktów: {$test->questions[0]["Liczba_punktow"]}</p>
+                                <p>Zakres struktury: {$test->questions[0]["Zakres_struktury"]}</p>
                                 <button type="submit" id="submitAnswerButton" class="defaultButton" form="answerForm">Zatwierdź odpowiedź</button>
                             </div>
                         </div>
-                        <p>{$questionData["Pytanie"]}</p>
+                        <p>{$test->questions[0]["Pytanie"]}</p>
                     HTML;
 
                     echo /*html*/'<form id="answerForm" action="answerCheckScreen/" method="post">';
 
-                    if ($questionData["Poprawna_odp"] === "A" || $questionData["Poprawna_odp"] === "B" || $questionData["Poprawna_odp"] === "C") {
+                    if ($test->questions[0]["Poprawna_odp"] === "A" || $test->questions[0]["Poprawna_odp"] === "B" || $test->questions[0]["Poprawna_odp"] === "C") {
                         echo <<<HTML
                             <input type="radio" id="aAnswer" name="multipleChoiceAnswer" value="A" class="answerRadio">
-                            <label for="aAnswer" class="answerRadioLabel">A. {$questionData["Odp_A"]}</label>
+                            <label for="aAnswer" class="answerRadioLabel">A. {$test->questions[0]["Odp_A"]}</label>
                             <input type="radio" id="bAnswer" name="multipleChoiceAnswer" value="B" class="answerRadio">
-                            <label for="bAnswer" class="answerRadioLabel">B. {$questionData["Odp_B"]}</label>
+                            <label for="bAnswer" class="answerRadioLabel">B. {$test->questions[0]["Odp_B"]}</label>
                             <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="answerRadio">
-                            <label for="cAnswer" class="answerRadioLabel">C. {$questionData["Odp_C"]}</label>
+                            <label for="cAnswer" class="answerRadioLabel">C. {$test->questions[0]["Odp_C"]}</label>
                         HTML;
-                    } else if ($questionData["Poprawna_odp"] === "T" || $questionData["Poprawna_odp"] === "N") {
+                    } else if ($test->questions[0]["Poprawna_odp"] === "T" || $test->questions[0]["Poprawna_odp"] === "N") {
                         echo <<<HTML
                             <input type="radio" id="trueAnswer" name="multipleChoiceAnswer" value="T" class="answerRadio">
                             <label for="trueAnswer" class="answerRadioLabel">Tak</label>
