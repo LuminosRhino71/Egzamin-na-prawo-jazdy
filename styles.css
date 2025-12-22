@@ -1,0 +1,74 @@
+:root {
+    --border-color: #b6b6b6;
+    --input-background-color: hsl(0, 0%, 16%);
+    --happy-color: #2092df;
+    --secondary-happy-color: #3c92ca;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #141414;
+    color: #fff;
+    text-align: center;
+}
+
+header {
+    color: #fff;
+}
+
+header h1 {
+    margin: 0;
+    padding: 10px;
+}
+
+.horizontalContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.mediaContainer {
+    margin: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+.defaultButton {
+    background-color: var(--happy-color);
+    text-decoration: none;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.answerRadio {
+    appearance: none;
+    display: none;
+}
+
+.answerRadioLabel {
+    background-color: var(--input-background-color);
+    border: 2px solid var(--happy-color);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.defaultButton:hover {
+    background-color: var(--secondary-happy-color);
+    text-decoration: underline;
+}
+
+.answerRadioLabel:hover {
+    background-color: var(--happy-color);
+    text-decoration: underline;
+}
+
+.answerRadio:checked + .answerRadioLabel {
+    background-color: var(--happy-color);
+}

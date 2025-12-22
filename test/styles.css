@@ -1,0 +1,17 @@
+#questionVideo {
+    display: inline-block;
+}
+
+#questionImage {
+    display: inline-block;
+    margin: auto;
+}
+
+#infoContainer {
+    margin: 20px 0;
+}
+
+#testInfoContainer {
+    border: 2px solid var(--happy-color);
+    padding: 10px;
+}
