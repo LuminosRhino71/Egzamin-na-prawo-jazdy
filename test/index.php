@@ -17,8 +17,10 @@
         <main>
             <a href="../" class="defaultButton">Porzuć test</a>
             <?php
+                require_once("../dbconnect.php");
                 require_once("test.php");
-                $test = new Test();
+
+                $test = new Test("B", $connection);
 
                 if ($test->isAvailable()) {
                     echo <<<HTML
