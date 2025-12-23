@@ -2,7 +2,7 @@
 <?php
     session_start();
 ?>
-<html lang="en">
+<html lang="pl">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +46,8 @@
                                 <p>Numer pytania: {$test->questions[0]["Numer_pytania"]}</p>
                                 <p>Liczba punktów: {$test->questions[0]["Liczba_punktow"]}</p>
                                 <p>Zakres struktury: {$test->questions[0]["Zakres_struktury"]}</p>
+                                <label for="timeLeftProgressBar">Pozostały czas na odpowiedź: <span id="secondsLeft"></span> s</label>
+                                <progress id="timeLeftProgressBar" value="" max=""></progress>
                                 <button type="submit" id="submitAnswerButton" class="defaultButton" form="answerForm">Zatwierdź odpowiedź</button>
                             </div>
                         </div>
