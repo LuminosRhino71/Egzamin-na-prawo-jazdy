@@ -1,6 +1,8 @@
 const answerForm = document.querySelector("#answerForm");
 const timeLeftBar = document.querySelector("#timeLeftProgressBar");
 const secondsLeftContainer = document.querySelector("#secondsLeft");
+const pointsGainedContainer = document.querySelector("#pointsGained");
+const pointsNeededContainer = document.querySelector("#pointsNeeded");
 
 let timeLeft = 35000;
 
@@ -19,4 +21,15 @@ function updateTimer() {
     setTimeout("updateTimer()", 1000);
 }
 
-updateTimer();
+function colorPoints() {
+    const pointsGained = parseInt(pointsGainedContainer.innerHTML);
+    const pointsNeeded = parseInt(pointsNeededContainer.innerHTML);
+    if (pointsGained >= pointsNeeded) {
+        pointsGainedContainer.style.color = "green";
+    } else {
+        pointsGainedContainer.style.color = "red";
+    }
+}
+
+//updateTimer();
+colorPoints();

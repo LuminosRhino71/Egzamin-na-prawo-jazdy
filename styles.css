@@ -72,3 +72,11 @@ button {
 .answerRadio:checked + .answerRadioLabel {
     background-color: var(--happy-color);
 }
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}

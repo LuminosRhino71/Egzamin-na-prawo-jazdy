@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+    session_start();
+    session_unset();
+?>
 <html lang="pl">
     <head>
         <meta charset="UTF-8">
