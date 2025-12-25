@@ -6,19 +6,10 @@ const pointsNeededContainer = document.querySelector("#pointsNeeded");
 
 let timeLeft = 35000;
 
-timeLeftBar.max = timeLeft;
-
-timeLeftBar.value = timeLeft;
-secondsLeftContainer.innerHTML = timeLeft / 1000;
-
-function updateTimer() {
-    if (35000 <= performance.now()) {
-        answerForm.submit();
-    }
+if (timeLeftBar && secondsLeftContainer) {
+    timeLeftBar.max = timeLeft;
     timeLeftBar.value = timeLeft;
     secondsLeftContainer.innerHTML = timeLeft / 1000;
-    timeLeft -= 1000;
-    setTimeout("updateTimer()", 1000);
 }
 
 function colorPoints() {
@@ -31,5 +22,17 @@ function colorPoints() {
     }
 }
 
-//updateTimer();
+function updateTimer() {
+    if (35000 <= performance.now()) {
+        answerForm.submit();
+    }
+    if (timeLeftBar && secondsLeftContainer) {
+        timeLeftBar.value = timeLeft;
+        secondsLeftContainer.innerHTML = timeLeft / 1000;
+    }
+    timeLeft -= 1000;
+    setTimeout("updateTimer()", 1000);
+}
+
 colorPoints();
+//updateTimer();
