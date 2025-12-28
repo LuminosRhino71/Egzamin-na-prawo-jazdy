@@ -20,8 +20,3 @@
     display: block;
     width: 100%;
 }
-
-#testInfoContainer a {
-    display: inline-block;
-    margin: 2px 0;
-}

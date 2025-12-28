@@ -2,7 +2,7 @@
     --border-color: #b6b6b6;
     --input-background-color: hsl(0, 0%, 16%);
     --happy-color: #2092df;
-    --secondary-happy-color: #3c92ca;
+    --secondary-happy-color: #5aa2d6;
 }
 
 body {
@@ -46,17 +46,28 @@ button {
     border-radius: 5px;
 }
 
-.answerRadio {
+.invisibleRadio {
     appearance: none;
     display: none;
 }
 
 .answerRadioLabel {
+    display: inline-block;
     background-color: var(--input-background-color);
     border: 2px solid var(--happy-color);
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
+    margin: 2px 0;
+}
+
+.summaryRadioLabel {
+    display: inline-block;
+    background-color: var(--input-background-color);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 2px 0;
 }
 
 .defaultButton:hover {
@@ -65,18 +76,32 @@ button {
 }
 
 .answerRadioLabel:hover {
-    background-color: var(--happy-color);
+    background-color: var(--secondary-happy-color);
+    border-color: var(--secondary-happy-color);
     text-decoration: underline;
 }
 
-.answerRadio:checked + .answerRadioLabel {
+.invisibleRadio:checked + .answerRadioLabel {
     background-color: var(--happy-color);
+    border-color: var(--happy-color);
+}
+
+.invisibleRadio:checked + .summaryRadioLabel {
+    background-color: rgb(117, 117, 117);
 }
 
 .green {
     background-color: green;
 }
 
+.green:hover {
+    background-color: #00cc00;
+}
+
 .red {
     background-color: red;
+}
+
+.red:hover {
+    background-color: #ff3333;
 }

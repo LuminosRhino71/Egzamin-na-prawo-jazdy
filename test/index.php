@@ -47,6 +47,19 @@
                         $currentQuestionNumber = 0;
                     }
 
+                    if (isset($_POST["summaryQuestion"])) {
+                        $currentQuestionNumber = intval($_POST["summaryQuestion"]) - 1;
+                    }
+
+                    if (empty($test->questions[$currentQuestionNumber]) || !empty($_SESSION["testCompleted"])) {
+                        if (empty($test->questions[$currentQuestionNumber])) {
+                            $currentQuestionNumber = 0;
+                        }
+                        $summaryMode = true;
+                    } else {
+                        $summaryMode = false;
+                    }
+
                     echo <<<HTML
                         <div id="infoContainer" class="horizontalContainer">
                             <div class="mediaContainer">
@@ -69,7 +82,8 @@
                             <div id="testInfoContainer">
                     HTML;
 
-                    if (empty($test->questions[$_SESSION["currentQuestionNumber"]])) {
+                    if ($summaryMode) {
+                        $_SESSION["testCompleted"] = true;
                         $testPassed = $test->pointQuantity >= $test->pointsNeededToPass;
                         $testPassedUserMessage = $testPassed ? "Zdałeś" : "Nie zdałeś";
 
@@ -77,15 +91,19 @@
                             <h2>{$testPassedUserMessage}</h2>
                             <p>Zdobyte punkty: <span id="pointsGained">{$test->pointQuantity}</span></p>
                             <p>Wymagana ilość punktów: <span id="pointsNeeded">{$test->pointsNeededToPass}</span></p>
+                            <form id="summaryForm" action="./" method="post">
                         HTML;
 
                         foreach ($test->answersCorrectness as $index => $correctness) {
                             $questionNumber = $index + 1;
                             $class = $correctness ? "green" : "red";
                             echo <<<HTML
-                                <a href="./?questionNumber={$index}" class="{$class} defaultButton ">{$questionNumber}</a>
+                                <input type="radio" id="summaryQuestion{$questionNumber}" name="summaryQuestion" value="{$questionNumber}" class="invisibleRadio" onchange="this.form.submit()" >
+                                <label for="summaryQuestion{$questionNumber}" class="{$class} summaryRadioLabel">{$questionNumber}</label>
                             HTML;
                         }
+
+                        echo /*html*/'</form>';
                     } else {
                         echo <<<HTML
                             <p>Numer pytania: {$test->questions[$currentQuestionNumber]["Numer_pytania"]}</p>
@@ -109,18 +127,18 @@
 
                     if ($test->questions[$currentQuestionNumber]["Poprawna_odp"] === "A" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "B" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "C") {
                         echo <<<HTML
-                            <input type="radio" id="aAnswer" name="multipleChoiceAnswer" value="A" class="answerRadio">
+                            <input type="radio" id="aAnswer" name="multipleChoiceAnswer" value="A" class="invisibleRadio">
                             <label for="aAnswer" class="answerRadioLabel">A. {$test->questions[$currentQuestionNumber]["Odp_A"]}</label>
-                            <input type="radio" id="bAnswer" name="multipleChoiceAnswer" value="B" class="answerRadio">
+                            <input type="radio" id="bAnswer" name="multipleChoiceAnswer" value="B" class="invisibleRadio">
                             <label for="bAnswer" class="answerRadioLabel">B. {$test->questions[$currentQuestionNumber]["Odp_B"]}</label>
-                            <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="answerRadio">
+                            <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="invisibleRadio">
                             <label for="cAnswer" class="answerRadioLabel">C. {$test->questions[$currentQuestionNumber]["Odp_C"]}</label>
                         HTML;
                     } else if ($test->questions[$currentQuestionNumber]["Poprawna_odp"] === "T" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "N") {
                         echo <<<HTML
-                            <input type="radio" id="trueAnswer" name="multipleChoiceAnswer" value="T" class="answerRadio">
+                            <input type="radio" id="trueAnswer" name="multipleChoiceAnswer" value="T" class="invisibleRadio">
                             <label for="trueAnswer" class="answerRadioLabel">Tak</label>
-                            <input type="radio" id="falseAnswer" name="multipleChoiceAnswer" value="N" class="answerRadio">
+                            <input type="radio" id="falseAnswer" name="multipleChoiceAnswer" value="N" class="invisibleRadio">
                             <label for="falseAnswer" class="answerRadioLabel">Nie</label>
                         HTML;
                     }
@@ -131,7 +149,9 @@
                 } else {
                     echo /*html*/'<p class="errorMessage">Wystąpił błąd podczas pobierania pytań.</p>';
                 }
+
                 $_SESSION["testObject"] = $test;
+                $_SESSION["currentQuestionNumber"] = $currentQuestionNumber;
             ?>
         </main>
         <script src="app.js"></script>
