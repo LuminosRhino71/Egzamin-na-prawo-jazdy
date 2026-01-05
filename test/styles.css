@@ -1,9 +1,11 @@
 #questionVideo {
     display: inline-block;
+    visibility: hidden;
 }
 
 #questionImage {
     display: inline-block;
+    visibility: hidden;
     margin: auto;
 }
 

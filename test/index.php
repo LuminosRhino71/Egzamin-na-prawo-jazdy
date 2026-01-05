@@ -109,7 +109,7 @@
                             <p>Numer pytania: {$test->questions[$currentQuestionNumber]["Numer_pytania"]}</p>
                             <p>Liczba punktów: {$test->questions[$currentQuestionNumber]["Liczba_punktow"]}</p>
                             <p>Zakres struktury: {$test->questions[$currentQuestionNumber]["Zakres_struktury"]}</p>
-                            <label for="timeLeftProgressBar">Pozostały czas na odpowiedź: <span id="secondsLeft"></span> s</label>
+                            <label for="timeLeftProgressBar"><span id="timeLeftText"></span>: <span id="secondsLeft"></span> s</label>
                             <progress id="timeLeftProgressBar" value="" max=""></progress>
                             <button type="submit" id="submitAnswerButton" class="defaultButton" form="answerForm">Zatwierdź odpowiedź</button>
                         HTML;
@@ -133,6 +133,7 @@
                             <label for="bAnswer" class="answerRadioLabel">B. {$test->questions[$currentQuestionNumber]["Odp_B"]}</label>
                             <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="invisibleRadio">
                             <label for="cAnswer" class="answerRadioLabel">C. {$test->questions[$currentQuestionNumber]["Odp_C"]}</label>
+                            <input type="radio" id="noAnswer" name="multipleChoiceAnswer" value="NOT ANSWERED" class="invisibleRadio" checked>
                         HTML;
                     } else if ($test->questions[$currentQuestionNumber]["Poprawna_odp"] === "T" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "N") {
                         echo <<<HTML
@@ -140,6 +141,7 @@
                             <label for="trueAnswer" class="answerRadioLabel">Tak</label>
                             <input type="radio" id="falseAnswer" name="multipleChoiceAnswer" value="N" class="invisibleRadio">
                             <label for="falseAnswer" class="answerRadioLabel">Nie</label>
+                            <input type="radio" id="noAnswer" name="multipleChoiceAnswer" value="NOT ANSWERED" class="invisibleRadio" checked>
                         HTML;
                     }
 
