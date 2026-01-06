@@ -1,9 +1,11 @@
 const answerForm = document.querySelector("#answerForm");
+const timeLeftLabel = document.querySelector("#timeLeftLabel");
 const timeLeftBar = document.querySelector("#timeLeftProgressBar");
 const timeLeftTextContainer = document.querySelector("#timeLeftText");
 const secondsLeftContainer = document.querySelector("#secondsLeft");
 const pointsGainedContainer = document.querySelector("#pointsGained");
 const pointsNeededContainer = document.querySelector("#pointsNeeded");
+const submitButton = document.querySelector("#submitAnswerButton");
 
 const advancedQuestionTime = 50000;
 const basicQuestionTime1 = 20000;
@@ -35,10 +37,18 @@ class questionTimer {
     }
 
     firstTimerEndSetup() {
+        timeLeftLabel.classList.add("displayNone");
+        timeLeftBar.classList.add("displayNone");
+    }
+
+    secondTimerStartSetup() {
         this.secondTimerCanStart = true;
         this.moment = performance.now();
+        timeLeftLabel.classList.remove("displayNone");
+        timeLeftBar.classList.remove("displayNone");
         this.timeGot = basicQuestionTime2;
         this.timeLeft = basicQuestionTime2;
+        submitButton.classList.remove("displayNone");
         this.panelSetup();
     }
 
@@ -47,15 +57,16 @@ class questionTimer {
             this.end();
         } else if (false === this.isQuestionAdvanced && this.timeGot <= performance.now() - this.moment) {
             if (false === this.secondTimerCanStart) {
-                if (this.mediaElement = document.querySelector("#questionVideo")) {
+                if ("questionVideo" == this.mediaElement.id) {
                     this.showMedia();
+                    this.firstTimerEndSetup();
                     this.mediaElement.play();
-                    this.mediaElement.addEventListener("ended", () => this.firstTimerEndSetup());
-                } else if (this.mediaElement = document.querySelector("#questionImage")) {
+                    this.mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
+                } else if ("questionImage" == this.mediaElement.id) {
                     this.showMedia();
-                    this.firstTimerEndSetup();
+                    this.secondTimerStartSetup();
                 } else {
-                    this.firstTimerEndSetup();
+                    this.secondTimerStartSetup();
                 }
             } else if (true === this.secondTimerCanStart) {
                 this.end();
@@ -77,11 +88,23 @@ class questionTimer {
             this.timeGot = advancedQuestionTime;
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = true;
+
+            if (this.mediaElement = document.querySelector("#questionVideo")) {
+                this.showMedia();
+            } else if (this.mediaElement = document.querySelector("#questionImage")) {
+                this.showMedia();
+            } else {
+                //Tu ma nastąpić pokazanie informacji o braku obrazu lub filmu.
+            }
         } else if (document.querySelector("#trueAnswer")) {
             this.timeGot = basicQuestionTime1;
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = false;
             this.secondTimerCanStart = false;
+            submitButton.classList.add("displayNone");
+
+            if (this.mediaElement = document.querySelector("#questionVideo")) {}
+            else if (this.mediaElement = document.querySelector("#questionImage")) {}
         }
         this.moment = performance.now();
         this.panelSetup();
