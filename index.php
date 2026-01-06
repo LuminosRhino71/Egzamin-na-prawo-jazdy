@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Strona Główna</title>
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="variable_styles.css">
     </head>
     <body>
         <header>

@@ -1,0 +1,19 @@
+.green {
+    background-color: green;
+}
+
+.green:hover {
+    background-color: #00cc00;
+}
+
+.red {
+    background-color: red;
+}
+
+.red:hover {
+    background-color: #ff3333;
+}
+
+.displayNone {
+    display: none;
+}

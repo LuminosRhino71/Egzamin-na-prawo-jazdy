@@ -89,19 +89,3 @@ button {
 .invisibleRadio:checked + .summaryRadioLabel {
     background-color: rgb(117, 117, 117);
 }
-
-.green {
-    background-color: green;
-}
-
-.green:hover {
-    background-color: #00cc00;
-}
-
-.red {
-    background-color: red;
-}
-
-.red:hover {
-    background-color: #ff3333;
-}

@@ -30,6 +30,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Test</title>
         <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="../variable_styles.css">
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -109,7 +110,7 @@
                             <p>Numer pytania: {$test->questions[$currentQuestionNumber]["Numer_pytania"]}</p>
                             <p>Liczba punktów: {$test->questions[$currentQuestionNumber]["Liczba_punktow"]}</p>
                             <p>Zakres struktury: {$test->questions[$currentQuestionNumber]["Zakres_struktury"]}</p>
-                            <label for="timeLeftProgressBar"><span id="timeLeftText"></span>: <span id="secondsLeft"></span> s</label>
+                            <label for="timeLeftProgressBar" id="timeLeftLabel"><span id="timeLeftText"></span>: <span id="secondsLeft"></span> s</label>
                             <progress id="timeLeftProgressBar" value="" max=""></progress>
                             <button type="submit" id="submitAnswerButton" class="defaultButton" form="answerForm">Zatwierdź odpowiedź</button>
                         HTML;
