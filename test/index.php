@@ -115,6 +115,7 @@
                             <label for="timeLeftProgressBar" id="timeLeftLabel"><span id="timeLeftText"></span>: <span id="secondsLeft"></span> s</label>
                             <progress id="timeLeftProgressBar" value="" max=""></progress>
                             <button type="submit" id="submitAnswerButton" class="defaultButton" form="answerForm">Zatwierdź odpowiedź</button>
+                            <button type="button" id="showMediaButton" class="defaultButton">Obejrzyj załącznik</button>
                         HTML;
                     }
 

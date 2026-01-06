@@ -6,6 +6,7 @@ const secondsLeftContainer = document.querySelector("#secondsLeft");
 const pointsGainedContainer = document.querySelector("#pointsGained");
 const pointsNeededContainer = document.querySelector("#pointsNeeded");
 const submitButton = document.querySelector("#submitAnswerButton");
+const showMediaButton = document.querySelector("#showMediaButton");
 
 const advancedQuestionTime = 50000;
 const basicQuestionTime1 = 20000;
@@ -52,22 +53,27 @@ class questionTimer {
         this.panelSetup();
     }
 
+    prepareAndShowMedia() {
+        showMediaButton.classList.add("displayNone");
+        if ("questionVideo" == this.mediaElement.id) {
+            this.showMedia();
+            this.firstTimerEndSetup();
+            this.mediaElement.play();
+            this.mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
+        } else if ("questionImage" == this.mediaElement.id) {
+            this.showMedia();
+            this.secondTimerStartSetup();
+        } else {
+            this.secondTimerStartSetup();
+        }
+    }
+
     check() {
         if (true === this.isQuestionAdvanced && this.timeGot <= performance.now() - this.moment) {
             this.end();
         } else if (false === this.isQuestionAdvanced && this.timeGot <= performance.now() - this.moment) {
             if (false === this.secondTimerCanStart) {
-                if ("questionVideo" == this.mediaElement.id) {
-                    this.showMedia();
-                    this.firstTimerEndSetup();
-                    this.mediaElement.play();
-                    this.mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
-                } else if ("questionImage" == this.mediaElement.id) {
-                    this.showMedia();
-                    this.secondTimerStartSetup();
-                } else {
-                    this.secondTimerStartSetup();
-                }
+                this.prepareAndShowMedia();
             } else if (true === this.secondTimerCanStart) {
                 this.end();
             }
@@ -102,6 +108,8 @@ class questionTimer {
             this.isQuestionAdvanced = false;
             this.secondTimerCanStart = false;
             submitButton.classList.add("displayNone");
+            showMediaButton.classList.remove("displayNone");
+            showMediaButton.addEventListener("click", () => this.prepareAndShowMedia())
 
             if (this.mediaElement = document.querySelector("#questionVideo")) {}
             else if (this.mediaElement = document.querySelector("#questionImage")) {}
@@ -111,6 +119,9 @@ class questionTimer {
         this.update();
     }
 }
+
+showMediaButton.classList.add("displayNone");
+
 const timerFlag = timeLeftTextContainer ? true : false;
 const timer = timerFlag ? new questionTimer : undefined;
 
@@ -123,5 +134,6 @@ function colorPoints() {
         pointsGainedContainer.style.color = "red";
     }
 }
+
 if (pointsGainedContainer && pointsNeededContainer) colorPoints();
 if (timerFlag) setInterval(() => timer.update(), 1000);
