@@ -70,13 +70,13 @@
 
                     if (str_ends_with($test->questions[$currentQuestionNumber]["Media"], ".mp4")) {
                         echo <<<HTML
-                            <video id="questionVideo" autoplay muted style="visibility: {$mediaVisibilityCSSProperty}">
+                            <video id="questionVideo" class="questionMedia" autoplay muted style="visibility: {$mediaVisibilityCSSProperty}">
                                 <source src='media/{$test->questions[$currentQuestionNumber]["Media"]}' type='video/mp4'/>
                             </video>
                         HTML;
                     } else if (str_ends_with($test->questions[$currentQuestionNumber]["Media"], ".jpg")) {
                         echo <<<HTML
-                            <img id="questionImage" src='media/{$test->questions[$currentQuestionNumber]["Media"]}' alt='Obraz załączony do pytania' style="visibility: {$mediaVisibilityCSSProperty}"/>
+                            <img id="questionImage" src='media/{$test->questions[$currentQuestionNumber]["Media"]}' class="questionMedia" alt='Obraz załączony do pytania' style="visibility: {$mediaVisibilityCSSProperty}"/>
                         HTML;
                     }
 

@@ -12,12 +12,13 @@ const advancedQuestionTime = 50000;
 const basicQuestionTime1 = 20000;
 const basicQuestionTime2 = 15000;
 
+const mediaElement = document.querySelector(".questionMedia");
+
 class questionTimer {
     timeGot;
     timeLeft;
     isQuestionAdvanced;
     secondTimerCanStart;
-    mediaElement;
     moment;
 
     end() {
@@ -25,7 +26,7 @@ class questionTimer {
     }
 
     showMedia() {
-        this.mediaElement.style.visibility = "visible";
+        mediaElement.style.visibility = "visible";
     }
 
     panelSetup() {
@@ -55,12 +56,12 @@ class questionTimer {
 
     prepareAndShowMedia() {
         showMediaButton.classList.add("displayNone");
-        if ("questionVideo" == this.mediaElement.id) {
+        if ("questionVideo" == mediaElement.id) {
             this.showMedia();
             this.firstTimerEndSetup();
-            this.mediaElement.play();
-            this.mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
-        } else if ("questionImage" == this.mediaElement.id) {
+            mediaElement.play();
+            mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
+        } else if ("questionImage" == mediaElement.id) {
             this.showMedia();
             this.secondTimerStartSetup();
         } else {
@@ -95,9 +96,9 @@ class questionTimer {
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = true;
 
-            if (this.mediaElement = document.querySelector("#questionVideo")) {
+            if ("questionVideo" == mediaElement.id) {
                 this.showMedia();
-            } else if (this.mediaElement = document.querySelector("#questionImage")) {
+            } else if ("questionImage" == mediaElement.id) {
                 this.showMedia();
             } else {
                 //Tu ma nastąpić pokazanie informacji o braku obrazu lub filmu.
@@ -110,9 +111,6 @@ class questionTimer {
             submitButton.classList.add("displayNone");
             showMediaButton.classList.remove("displayNone");
             showMediaButton.addEventListener("click", () => this.prepareAndShowMedia())
-
-            if (this.mediaElement = document.querySelector("#questionVideo")) {}
-            else if (this.mediaElement = document.querySelector("#questionImage")) {}
         }
         this.moment = performance.now();
         this.panelSetup();
