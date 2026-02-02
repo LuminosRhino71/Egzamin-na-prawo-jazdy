@@ -2,6 +2,7 @@
 class Test {
     public $questions = [];
     public $answersCorrectness = [];
+    public $answersChosen = [];
     public $pointQuantity = 0;
     public $pointsNeededToPass = 68;
     private $category;

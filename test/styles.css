@@ -1,3 +1,15 @@
+.correct {
+    border-color: green;
+}
+
+.incorrectlyChosen {
+    border-color: red;
+}
+
+.deactivateLabel {
+    pointer-events: none;
+}
+
 #questionVideo {
     display: inline-block;
 }

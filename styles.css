@@ -46,6 +46,11 @@ button {
     border-radius: 5px;
 }
 
+.defaultButton:hover {
+    background-color: var(--secondary-happy-color);
+    text-decoration: underline;
+}
+
 .invisibleRadio {
     appearance: none;
     display: none;
@@ -68,11 +73,6 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     margin: 2px 0;
-}
-
-.defaultButton:hover {
-    background-color: var(--secondary-happy-color);
-    text-decoration: underline;
 }
 
 .answerRadioLabel:hover {

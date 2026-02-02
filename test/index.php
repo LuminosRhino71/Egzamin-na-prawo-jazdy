@@ -15,6 +15,8 @@
         $userAnswer = $_POST["multipleChoiceAnswer"];
         $correctAnswer = $_SESSION["correctAnswer"];
 
+        $test->answersChosen[] = $userAnswer;
+
         if ($userAnswer === $correctAnswer) {
             $test->answersCorrectness[] = true;
             $test->pointQuantity += $test->questions[$_SESSION["currentQuestionNumber"]]["Liczba_punktow"];
@@ -129,22 +131,41 @@
 
                     echo /*html*/'<form id="answerForm" action="./" method="post">';
 
+                    $radioInputState = "";
+                    $labelSummaryModeClass = "";
+                    $labelAnswerIndicatorsClasses = [
+                        "A" => "",
+                        "B" => "",
+                        "C" => "",
+                        "T" => "",
+                        "N" => ""
+                    ];
+
+                    if ($summaryMode) {
+                        $radioInputState = " disabled";
+                        $labelSummaryModeClass = " deactivateLabel";
+                        $labelAnswerIndicatorsClasses[$test->questions[$currentQuestionNumber]["Poprawna_odp"]] = " correct";
+                        if (!$test->answersCorrectness[$currentQuestionNumber]) {
+                            $labelAnswerIndicatorsClasses[$test->answersChosen[$currentQuestionNumber]] = " incorrectlyChosen";
+                        }
+                    }
+
                     if ($test->questions[$currentQuestionNumber]["Poprawna_odp"] === "A" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "B" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "C") {
                         echo <<<HTML
-                            <input type="radio" id="aAnswer" name="multipleChoiceAnswer" value="A" class="invisibleRadio">
-                            <label for="aAnswer" class="answerRadioLabel">A. {$test->questions[$currentQuestionNumber]["Odp_A"]}</label>
-                            <input type="radio" id="bAnswer" name="multipleChoiceAnswer" value="B" class="invisibleRadio">
-                            <label for="bAnswer" class="answerRadioLabel">B. {$test->questions[$currentQuestionNumber]["Odp_B"]}</label>
-                            <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="invisibleRadio">
-                            <label for="cAnswer" class="answerRadioLabel">C. {$test->questions[$currentQuestionNumber]["Odp_C"]}</label>
+                            <input type="radio" id="aAnswer" name="multipleChoiceAnswer" value="A" class="invisibleRadio"{$radioInputState}>
+                            <label for="aAnswer" class='answerRadioLabel{$labelAnswerIndicatorsClasses["A"]}{$labelSummaryModeClass}'>A. {$test->questions[$currentQuestionNumber]["Odp_A"]}</label>
+                            <input type="radio" id="bAnswer" name="multipleChoiceAnswer" value="B" class="invisibleRadio"{$radioInputState}>
+                            <label for="bAnswer" class='answerRadioLabel{$labelAnswerIndicatorsClasses["B"]}{$labelSummaryModeClass}'>B. {$test->questions[$currentQuestionNumber]["Odp_B"]}</label>
+                            <input type="radio" id="cAnswer" name="multipleChoiceAnswer" value="C" class="invisibleRadio"{$radioInputState}>
+                            <label for="cAnswer" class='answerRadioLabel{$labelAnswerIndicatorsClasses["C"]}{$labelSummaryModeClass}'>C. {$test->questions[$currentQuestionNumber]["Odp_C"]}</label>
                             <input type="radio" id="noAnswer" name="multipleChoiceAnswer" value="NOT ANSWERED" class="invisibleRadio" checked>
                         HTML;
                     } else if ($test->questions[$currentQuestionNumber]["Poprawna_odp"] === "T" || $test->questions[$currentQuestionNumber]["Poprawna_odp"] === "N") {
                         echo <<<HTML
-                            <input type="radio" id="trueAnswer" name="multipleChoiceAnswer" value="T" class="invisibleRadio">
-                            <label for="trueAnswer" class="answerRadioLabel">Tak</label>
-                            <input type="radio" id="falseAnswer" name="multipleChoiceAnswer" value="N" class="invisibleRadio">
-                            <label for="falseAnswer" class="answerRadioLabel">Nie</label>
+                            <input type="radio" id="trueAnswer" name="multipleChoiceAnswer" value="T" class="invisibleRadio"{$radioInputState}>
+                            <label for="trueAnswer" class='answerRadioLabel{$labelAnswerIndicatorsClasses["T"]}{$labelSummaryModeClass}'>Tak</label>
+                            <input type="radio" id="falseAnswer" name="multipleChoiceAnswer" value="N" class="invisibleRadio"{$radioInputState}>
+                            <label for="falseAnswer" class='answerRadioLabel{$labelAnswerIndicatorsClasses["N"]}{$labelSummaryModeClass}'>Nie</label>
                             <input type="radio" id="noAnswer" name="multipleChoiceAnswer" value="NOT ANSWERED" class="invisibleRadio" checked>
                         HTML;
                     }
