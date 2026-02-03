@@ -5,6 +5,7 @@ class Test {
     public $answersChosen = [];
     public $pointQuantity = 0;
     public $pointsNeededToPass = 68;
+    public $automaticMode = false;
     private $category;
 
     public function isAvailable(): bool {

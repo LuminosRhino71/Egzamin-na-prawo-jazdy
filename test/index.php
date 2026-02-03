@@ -25,6 +25,10 @@
         }
         $_SESSION["currentQuestionNumber"] += 1;
     }
+
+    if (isset($_GET["automatic"])) {
+        $test->automaticMode = true;
+    }
 ?>
 <html lang="pl">
     <head>
@@ -182,5 +186,10 @@
             ?>
         </main>
         <script src="app.js"></script>
+        <?php
+            if ($test->automaticMode && !$summaryMode) {
+                echo '<script src="randomizeAnswers.js"></script>';
+            }
+        ?>
     </body>
 </html>

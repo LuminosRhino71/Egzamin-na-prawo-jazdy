@@ -17,7 +17,10 @@
         </header>
         <main>
             <p>Można tu rozwiązywać testy.</p>
-            <a href="test" class="defaultButton">Rozpocznij test</a>
+            <div class="verticalContainer">
+                <a href="test" class="defaultButton">Rozpocznij test</a>
+                <a href="test?automatic=true" class="defaultButton">Uruchom test z losowo zaznaczonymi odpowiedziami</a>
+            </div>
         </main>
     </body>
 </html>
