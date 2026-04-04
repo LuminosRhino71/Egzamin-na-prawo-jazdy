@@ -13,7 +13,7 @@
     </head>
     <body>
         <header>
-            <h1>Testuj.</h1>
+            <h1>Testuj</h1>
         </header>
         <main>
             <p>Można tu rozwiązywać testy.</p>

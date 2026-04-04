@@ -41,7 +41,7 @@
     </head>
     <body>
         <header>
-            <h1>Odpowiadaj na pytania.</h1>
+            <h1>Odpowiadaj na pytania</h1>
         </header>
         <main>
             <a href="../" class="defaultButton">Porzuć test</a>
