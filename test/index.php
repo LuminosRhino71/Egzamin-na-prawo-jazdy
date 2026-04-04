@@ -67,12 +67,13 @@
                         $summaryMode = false;
                     }
 
+                    $mediaContainerDisplayCSSProperty = $test->questions[$currentQuestionNumber]["Media"] ? "block" : "none";
+                    $mediaVisibilityCSSProperty = $summaryMode ? "visible" : "hidden";
+
                     echo <<<HTML
                         <div id="infoContainer" class="horizontalContainer">
-                            <div class="mediaContainer">
+                            <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
                     HTML;
-
-                    $mediaVisibilityCSSProperty = $summaryMode ? "visible" : "hidden";
 
                     if (str_ends_with($test->questions[$currentQuestionNumber]["Media"], ".mp4")) {
                         echo <<<HTML

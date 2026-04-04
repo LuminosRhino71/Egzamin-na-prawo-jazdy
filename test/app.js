@@ -95,14 +95,15 @@ class questionTimer {
             this.timeGot = advancedQuestionTime;
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = true;
-
-            if ("questionVideo" == mediaElement.id) {
-                this.showMedia();
-            } else if ("questionImage" == mediaElement.id) {
-                this.showMedia();
-            } else {
-                //Tu ma nastąpić pokazanie informacji o braku obrazu lub filmu.
-            }
+            try {
+                if ("questionVideo" == mediaElement.id) {
+                    this.showMedia();
+                } else if ("questionImage" == mediaElement.id) {
+                    this.showMedia();
+                } else {
+                    //Tu ma nastąpić pokazanie informacji o braku obrazu lub filmu.
+                }
+            } catch (error) {}
         } else if (document.querySelector("#trueAnswer")) {
             this.timeGot = basicQuestionTime1;
             this.timeLeft = this.timeGot;
@@ -118,7 +119,9 @@ class questionTimer {
     }
 }
 
-showMediaButton.classList.add("displayNone");
+try{
+    showMediaButton.classList.add("displayNone");
+} catch (error) {}
 
 const timerFlag = timeLeftTextContainer ? true : false;
 const timer = timerFlag ? new questionTimer : undefined;
