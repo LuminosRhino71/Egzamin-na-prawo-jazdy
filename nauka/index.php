@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    session_unset();
+    require_once("../dbconnect.php");
+
+    $category = "B";
+
+    $getQuestionQuery = $connection->prepare(
+        'SELECT pyt.Numer_pytania, pyt.Pytanie, pyt.Odp_A, pyt.Odp_B, pyt.Odp_C, pyt.Poprawna_odp, pyt.Media, pyt.Zakres_struktury, pyt.Liczba_punktow
+        FROM pytania_egzaminacyjne as pyt WHERE Kategorie LIKE :category /*AND Zakres_struktury LIKE :questionLevel AND Liczba_punktow = :pointQuantity*/
+        ORDER BY RAND() LIMIT :questionQuantity'
+    );
+
+    $categoryValue = "%{$category},%";
+    $getQuestionQuery->bindValue(':category', $categoryValue, PDO::PARAM_STR);
+    //$getQuestionQuery->bindValue(':questionLevel', $questionLevel, PDO::PARAM_STR);
+    //$getQuestionQuery->bindValue(':pointQuantity', $pointQuantity, PDO::PARAM_INT);
+    $getQuestionQuery->bindValue(':questionQuantity', 1, PDO::PARAM_INT);
+    $getQuestionQuery->execute();
+    $question = $getQuestionQuery->fetch();
 ?>
 <html lang="pl">
     <head>
@@ -17,6 +33,9 @@
         </header>
         <main>
             <a href="../" class="defaultButton">Porzuć naukę</a>
+            <?php
+                
+            ?>
         </main>
         <script src="app.js"></script>
     </body>
