@@ -20,6 +20,7 @@
             <div class="verticalContainer">
                 <a href="test" class="defaultButton">Rozpocznij test</a>
                 <a href="test?automatic=true" class="defaultButton">Uruchom test z losowo zaznaczonymi odpowiedziami</a>
+                <a href="nauka" class="defaultButton">Rozpocznij naukę</a>
             </div>
         </main>
     </body>

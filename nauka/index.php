@@ -18,5 +18,6 @@
         <main>
             <a href="../" class="defaultButton">Porzuć naukę</a>
         </main>
+        <script src="app.js"></script>
     </body>
 </html>
