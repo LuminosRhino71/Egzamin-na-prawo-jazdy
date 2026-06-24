@@ -71,7 +71,7 @@
                     $mediaVisibilityCSSProperty = $summaryMode ? "visible" : "hidden";
 
                     echo <<<HTML
-                        <div id="infoContainer" class="horizontalContainer">
+                        <div id="questionInfo-MediaContainer" class="horizontalContainer">
                             <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
                     HTML;
 
@@ -176,8 +176,6 @@
                     }
 
                     echo /*html*/'</form>';
-                } else if (!empty($getQuestionQuery) && 0 == $getQuestionQuery->rowCount()) {
-                    echo /*html*/'<p>Brak pytań.</p>';
                 } else {
                     echo /*html*/'<p class="errorMessage">Wystąpił błąd podczas pobierania pytań.</p>';
                 }
@@ -189,7 +187,7 @@
         <script src="app.js"></script>
         <?php
             if ($test->automaticMode && !$summaryMode) {
-                echo '<script src="randomizeAnswers.js"></script>';
+                echo /*html*/'<script src="randomizeAnswers.js"></script>';
             }
         ?>
     </body>

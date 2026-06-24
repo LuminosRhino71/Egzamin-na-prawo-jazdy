@@ -34,7 +34,34 @@
         <main>
             <a href="../" class="defaultButton">Porzuć naukę</a>
             <?php
-                
+                if (!empty($question)) {
+                    $mediaContainerDisplayCSSProperty = $question["Media"] ? "block" : "none";
+
+                    echo <<<HTML
+                        <div id="questionInfo-MediaContainer" class="horizontalContainer">
+                            <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
+                    HTML;
+
+                    if (str_ends_with($question["Media"], ".mp4")) {
+                        echo <<<HTML
+                            <video id="questionVideo" class="questionMedia" autoplay muted>
+                                <source src='../test/media/{$question["Media"]}' type='video/mp4'/>
+                            </video>
+                        HTML;
+                    } else if (str_ends_with($question["Media"], ".jpg")) {
+                        echo <<<HTML
+                            <img id="questionImage" src='../test/media/{$question["Media"]}' class="questionMedia" alt='Obraz załączony do pytania'/>
+                        HTML;
+                    }
+
+                    echo <<<HTML
+                            </div>
+                        </div>
+                        <p>{$question["Pytanie"]}</p>
+                    HTML;
+                } else {
+                    echo /*html*/'<p class="errorMessage">Wystąpił błąd podczas pobierania pytania.</p>';
+                }
             ?>
         </main>
         <script src="app.js"></script>
