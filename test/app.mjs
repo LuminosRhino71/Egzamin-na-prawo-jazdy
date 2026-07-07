@@ -36,3 +36,7 @@ function colorPoints() {
 
 if (pointsGainedContainer && pointsNeededContainer) colorPoints();
 if (timerFlag) setInterval(() => timer.update(), 1000);
+
+if (null === mediaElement) {
+    questionInfoAndMediaContainer.style.display = "flex";
+}
