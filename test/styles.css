@@ -29,3 +29,9 @@
     width: 100%;
     margin: 5px 0;
 }
+
+#summaryForm > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
