@@ -1,4 +1,7 @@
-export class questionTimer {
+import * as DOMELements from "./DOMElements.mjs";
+import * as questionsTimes from "./questionsTimes.mjs";
+
+export default class questionTimer {
     timeGot;
     timeLeft;
     isQuestionAdvanced;
@@ -6,46 +9,46 @@ export class questionTimer {
     moment;
 
     end() {
-        answerForm.submit();
+        DOMELements.answerForm.submit();
     }
 
     showMedia() {
-        mediaElement.style.visibility = "visible";
+        DOMELements.mediaElement.style.visibility = "visible";
     }
 
     panelSetup() {
-        if (timeLeftBar && timeLeftTextContainer && secondsLeftContainer) {
-            timeLeftBar.max = this.timeGot;
-            timeLeftBar.value = this.timeGot;
-            timeLeftTextContainer.innerHTML = false === this.secondTimerCanStart ? "Czas na zapoznanie się z pytaniem" : "Pozostały czas na odpowiedź";
-            secondsLeftContainer.innerHTML = this.timeGot / 1000;
+        if (DOMELements.timeLeftBar && DOMELements.timeLeftTextContainer && DOMELements.secondsLeftContainer) {
+            DOMELements.timeLeftBar.max = this.timeGot;
+            DOMELements.timeLeftBar.value = this.timeGot;
+            DOMELements.timeLeftTextContainer.innerHTML = false === this.secondTimerCanStart ? "Czas na zapoznanie się z pytaniem" : "Pozostały czas na odpowiedź";
+            DOMELements.secondsLeftContainer.innerHTML = this.timeGot / 1000;
         }
     }
 
     firstTimerEndSetup() {
-        timeLeftLabel.classList.add("displayNone");
-        timeLeftBar.classList.add("displayNone");
+        DOMELements.timeLeftLabel.classList.add("displayNone");
+        DOMELements.timeLeftBar.classList.add("displayNone");
     }
 
     secondTimerStartSetup() {
         this.secondTimerCanStart = true;
         this.moment = performance.now();
-        timeLeftLabel.classList.remove("displayNone");
-        timeLeftBar.classList.remove("displayNone");
-        this.timeGot = basicQuestionTime2;
-        this.timeLeft = basicQuestionTime2;
-        submitButton.classList.remove("displayNone");
+        DOMELements.timeLeftLabel.classList.remove("displayNone");
+        DOMELements.timeLeftBar.classList.remove("displayNone");
+        this.timeGot = questionsTimes.basic2;
+        this.timeLeft = questionsTimes.basic2;
+        DOMELements.submitButton.classList.remove("displayNone");
         this.panelSetup();
     }
 
     prepareAndShowMedia() {
-        showMediaButton.classList.add("displayNone");
-        if ("questionVideo" == mediaElement.id) {
+        DOMELements.showMediaButton.classList.add("displayNone");
+        if ("questionVideo" == DOMELements.mediaElement.id) {
             this.showMedia();
             this.firstTimerEndSetup();
-            mediaElement.play();
-            mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
-        } else if ("questionImage" == mediaElement.id) {
+            DOMELements.mediaElement.play();
+            DOMELements.mediaElement.addEventListener("ended", () => this.secondTimerStartSetup());
+        } else if ("questionImage" == DOMELements.mediaElement.id) {
             this.showMedia();
             this.secondTimerStartSetup();
         } else {
@@ -66,9 +69,9 @@ export class questionTimer {
     }
 
     update() {
-        if (timeLeftBar && secondsLeftContainer) {
-            timeLeftBar.value = this.timeLeft;
-            secondsLeftContainer.innerHTML = this.timeLeft / 1000;
+        if (DOMELements.timeLeftBar && DOMELements.secondsLeftContainer) {
+            DOMELements.timeLeftBar.value = this.timeLeft;
+            DOMELements.secondsLeftContainer.innerHTML = this.timeLeft / 1000;
         }
         this.timeLeft -= 1000;
         this.check();
@@ -76,26 +79,26 @@ export class questionTimer {
 
     constructor() {
         if (document.querySelector("#aAnswer")) {
-            this.timeGot = advancedQuestionTime;
+            this.timeGot = questionsTimes.advanced;
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = true;
             try {
-                if ("questionVideo" == mediaElement.id) {
+                if ("questionVideo" == DOMELements.mediaElement.id) {
                     this.showMedia();
-                } else if ("questionImage" == mediaElement.id) {
+                } else if ("questionImage" == DOMELements.mediaElement.id) {
                     this.showMedia();
                 } else {
                     //Tu ma nastąpić pokazanie informacji o braku obrazu lub filmu.
                 }
             } catch (error) {}
         } else if (document.querySelector("#trueAnswer")) {
-            this.timeGot = basicQuestionTime1;
+            this.timeGot = questionsTimes.basic1;
             this.timeLeft = this.timeGot;
             this.isQuestionAdvanced = false;
             this.secondTimerCanStart = false;
-            submitButton.classList.add("displayNone");
-            showMediaButton.classList.remove("displayNone");
-            showMediaButton.addEventListener("click", () => this.prepareAndShowMedia())
+            DOMELements.submitButton.classList.add("displayNone");
+            DOMELements.showMediaButton.classList.remove("displayNone");
+            DOMELements.showMediaButton.addEventListener("click", () => this.prepareAndShowMedia())
         }
         this.moment = performance.now();
         this.panelSetup();
