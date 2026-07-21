@@ -10,14 +10,11 @@
     } else {
         $getQuestionQuery = $connection->prepare(
             'SELECT pyt.Numer_pytania, pyt.Pytanie, pyt.Odp_A, pyt.Odp_B, pyt.Odp_C, pyt.Poprawna_odp, pyt.Media, pyt.Zakres_struktury, pyt.Liczba_punktow
-            FROM pytania_egzaminacyjne as pyt WHERE Kategorie LIKE :category /*AND Zakres_struktury LIKE :questionLevel AND Liczba_punktow = :pointQuantity*/
-            ORDER BY RAND() LIMIT :questionQuantity'
+            FROM pytania_egzaminacyjne as pyt WHERE Kategorie LIKE :category ORDER BY RAND() LIMIT :questionQuantity'
         );
 
         $categoryValue = "%{$category},%";
         $getQuestionQuery->bindValue(':category', $categoryValue, PDO::PARAM_STR);
-        //$getQuestionQuery->bindValue(':questionLevel', $questionLevel, PDO::PARAM_STR);
-        //$getQuestionQuery->bindValue(':pointQuantity', $pointQuantity, PDO::PARAM_INT);
         $getQuestionQuery->bindValue(':questionQuantity', 1, PDO::PARAM_INT);
         $getQuestionQuery->execute();
         $question = $getQuestionQuery->fetch();
@@ -31,6 +28,7 @@
         <title>Tryb Nauki</title>
         <link rel="stylesheet" href="../styles.css">
         <link rel="stylesheet" href="../variable_styles.css">
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <header>
@@ -44,7 +42,6 @@
 
                     echo <<<HTML
                         <div id="questionInfo-MediaContainer" class="horizontalContainer">
-                            <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
                     HTML;
 
                     if (str_ends_with($question["Media"], ".mp4")) {
@@ -60,7 +57,6 @@
                     }
 
                     echo <<<HTML
-                            </div>
                         </div>
                         <p>{$question["Pytanie"]}</p>
                     HTML;

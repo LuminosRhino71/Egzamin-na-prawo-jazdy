@@ -25,7 +25,3 @@ if (timerFlag) setInterval(() => timer.update(), 1000);
 if (null === DOMELements.mediaElement) {
     DOMELements.questionInfoAndMediaContainer.style.display = "flex";
 }
-
-if (null === DOMELements.questionInfoAndMediaContainer) {
-    DOMELements.mediaElement.style.display = "flex";
-}

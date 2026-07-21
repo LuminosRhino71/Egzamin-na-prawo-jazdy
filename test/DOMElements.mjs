@@ -1,4 +1,5 @@
 export const questionInfoAndMediaContainer = document.querySelector("#questionInfo-MediaContainer");
+export const mediaElement = document.querySelector(".questionMedia");
 export const timeLeftLabel = document.querySelector("#timeLeftLabel");
 export const timeLeftBar = document.querySelector("#timeLeftProgressBar");
 export const timeLeftTextContainer = document.querySelector("#timeLeftText");
@@ -8,4 +9,3 @@ export const pointsNeededContainer = document.querySelector("#pointsNeeded");
 export const submitButton = document.querySelector("#submitAnswerButton");
 export const showMediaButton = document.querySelector("#showMediaButton");
 export const answerForm = document.querySelector("#answerForm");
-export const mediaElement = document.querySelector(".questionMedia");
