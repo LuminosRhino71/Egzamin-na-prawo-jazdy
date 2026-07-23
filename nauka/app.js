@@ -3,8 +3,8 @@ const answerButtons = document.querySelectorAll("#answerForm > input");
 const answerButtonsLabels = document.querySelectorAll("#answerForm > label");
 const submitButton = document.querySelector("#submitAnswerButton");
 
-function summariseQuestion(userAnswer) {
-    const correctAnswer = getCorrectAnswer();
+async function summariseQuestion(userAnswer) {
+    const correctAnswer = await (await fetch("correct_answer.php")).text();
     answerButtons.forEach(button => {
         button.checked = false;
     });
@@ -47,23 +47,6 @@ function summariseQuestion(userAnswer) {
         answerButtonsLabels[getAnswerButtonIndex(userAnswer)].classList.add("incorrectlyChosen");
     }
     answerButtonsLabels[getAnswerButtonIndex(correctAnswer)].classList.add("correct");
-}
-
-function getCorrectAnswer() {
-    const xhr = new XMLHttpRequest();
-    let correctAnswer;
-    xhr.open("GET", "correct_answer.php", false);
-    xhr.onload = () => {
-        switch (xhr.status) {
-            case 200:
-                correctAnswer = xhr.responseText;
-                break;
-            default:
-                console.log("Unknown response from correct_answer.php.");
-        }
-    }
-    xhr.send();
-    return correctAnswer;
 }
 
 answerForm.addEventListener("submit", event => {
