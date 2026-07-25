@@ -71,8 +71,9 @@
                     $mediaVisibilityCSSProperty = $summaryMode ? "visible" : "hidden";
 
                     echo <<<HTML
-                        <div id="infoContainer" class="horizontalContainer">
-                            <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
+                        <div id="questionContainer">
+                            <div id="questionInfo-MediaContainer" class="horizontalContainer">
+                                <div class="mediaContainer" style="display: {$mediaContainerDisplayCSSProperty}">
                     HTML;
 
                     if (str_ends_with($test->questions[$currentQuestionNumber]["Media"], ".mp4")) {
@@ -107,13 +108,33 @@
                         foreach ($test->answersCorrectness as $index => $correctness) {
                             $questionNumber = $index + 1;
                             $class = $correctness ? "green" : "red";
-                            echo <<<HTML
+                            $buttonHTML = <<<HTML
                                 <input type="radio" id="summaryQuestion{$questionNumber}" name="summaryQuestion" value="{$questionNumber}" class="invisibleRadio" onchange="this.form.submit()" >
                                 <label for="summaryQuestion{$questionNumber}" class="{$class} summaryRadioLabel">{$questionNumber}</label>
                             HTML;
+                            if (0 == $index) {
+                                echo <<<HTML
+                                    <p>Pytania podstawowe (tak/nie):</p>
+                                    <div>
+                                        $buttonHTML
+                                HTML;
+                            } else if (20 == $index) {
+                                echo <<<HTML
+                                    </div>
+                                    <p>Pytania specjalistyczne (A/B/C):</p>
+                                    <div>
+                                        $buttonHTML
+                                HTML;
+                            } else if (31 == $index) {
+                                echo <<<HTML
+                                    </div>
+                                HTML;
+                            } else {
+                                echo $buttonHTML;
+                            }
                         }
 
-                        echo /*html*/'</form>';
+                        echo/*html*/ '</form>';
                     } else {
                         echo <<<HTML
                             <p>Numer pytania: {$test->questions[$currentQuestionNumber]["Numer_pytania"]}</p>
@@ -134,7 +155,7 @@
 
                     $_SESSION["correctAnswer"] = $test->questions[$currentQuestionNumber]["Poprawna_odp"];
 
-                    echo /*html*/'<form id="answerForm" action="./" method="post">';
+                    echo/*html*/ '<form id="answerForm" action="./" method="post">';
 
                     $radioInputState = "";
                     $labelSummaryModeClass = "";
@@ -175,21 +196,22 @@
                         HTML;
                     }
 
-                    echo /*html*/'</form>';
-                } else if (!empty($getQuestionQuery) && 0 == $getQuestionQuery->rowCount()) {
-                    echo /*html*/'<p>Brak pytań.</p>';
+                    echo <<<HTML
+                            </form>
+                        </div>
+                    HTML;
                 } else {
-                    echo /*html*/'<p class="errorMessage">Wystąpił błąd podczas pobierania pytań.</p>';
+                    echo/*html*/ '<p class="errorMessage">Wystąpił błąd podczas pobierania pytań.</p>';
                 }
 
                 $_SESSION["testObject"] = $test;
                 $_SESSION["currentQuestionNumber"] = $currentQuestionNumber;
             ?>
         </main>
-        <script src="app.js"></script>
+        <script src="app.mjs" type="module"></script>
         <?php
             if ($test->automaticMode && !$summaryMode) {
-                echo '<script src="randomizeAnswers.js"></script>';
+                echo/*html*/ '<script src="randomizeAnswers.js"></script>';
             }
         ?>
     </body>
